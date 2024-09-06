@@ -2,7 +2,8 @@ class Ship
 
     attr_reader :name,
                 :length,
-                :health
+                :health,
+                :hit
 
     attr_writer :health
 

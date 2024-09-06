@@ -24,6 +24,9 @@ before(:each) do
     @cell_d3 = Cell.new("D3")
     @cell_d4 = Cell.new("D4")
 
+    @cruiser = Ship.new("Cruiser", 3)
+end
+
     it 'can initialize' do
         @cell_a1 = Cell.new("A1")
 
@@ -49,17 +52,17 @@ before(:each) do
     end
 
     it 'can place a ship' do
-        @cell_a1.place_ship(cruiser)
-        @cell_a2.place_ship(cruiser)
-        @cell_a3.place_ship(cruiser)
+        @cell_a1.place_ship(@cruiser)
+        @cell_a2.place_ship(@cruiser)
+        @cell_a3.place_ship(@cruiser)
 
-    expect(@cell_a1.ship).to eq(cruiser)
-    expect(@cell_a2.ship).to eq(cruiser)
-    expect(@cell_a3.ship).to eq(cruiser)
+    expect(@cell_a1.ship).to eq(@cruiser)
+    expect(@cell_a2.ship).to eq(@cruiser)
+    expect(@cell_a3.ship).to eq(@cruiser)
     end
 
     it 'can tell the cell is not empty after placing a ship' do
-        @cell_a1.place_ship(cruiser)
+        @cell_a1.place_ship(@cruiser)
 
     expect(@cell_a1.empty?).to eq(false)
     end
@@ -68,14 +71,15 @@ before(:each) do
         
     expect(@cell_a1.fired_upon?).to eq(false)
 
-    @cell_a1.fired_upon
+    @cell_a1.fire_upon
 
     expect(@cell_a1.fired_upon?).to eq(true)
     end
 
     it 'can give feedback on ship health' do
-        @cell_a1.fired_upon
+        @cell_a1.place_ship(@cruiser)
+        @cell_a1.fire_upon
 
     expect(@cell_a1.ship.health).to eq(2)
-    end
-end
+     end
+ end
