@@ -82,4 +82,42 @@ end
 
     expect(@cell_a1.ship.health).to eq(2)
      end
- end
+
+ describe '#shots fired' do
+        it 'renders "." if not fired upon' do
+
+            expect(@cell_a1.render).to eq(".") 
+        end
+
+        it 'renders "M" if fired upon and empty' do
+            @cell_a1.place_ship(@cruiser)
+            @cell_a2.place_ship(@cruiser)
+            @cell_a3.place_ship(@cruiser)
+
+            expect(@cell_b1.render).to eq("M")
+        end
+
+        it 'renders "H" if fired upon and hits' do
+            @cell_a1.place_ship(@cruiser)
+            @cell_a2.place_ship(@cruiser)
+            @cell_a3.place_ship(@cruiser)
+            @cell_a1.fire_upon 
+
+            expect(@cell_a1.render).to eq("H")
+        end
+
+        it 'renders "X" if fired upon and sunk' do
+            @cell_a1.place_ship(@cruiser)
+            @cell_a2.place_ship(@cruiser)
+            @cell_a3.place_ship(@cruiser)
+            @cell_a1.fire_upon 
+            @cell_a2.fire_upon 
+            @cell_a3.fire_upon
+
+            expect(@cruiser.sunk?).to eq(true)
+            expect(@cell_a3.render).to eq("X")
+        end
+    end
+end
+
+        
