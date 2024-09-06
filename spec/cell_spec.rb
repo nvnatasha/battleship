@@ -50,18 +50,19 @@ end
     end
 
     it 'can place a ship' do
-        cruiser = Ship.new("Cruiser", 3)
-        @cell_a1.place_ship(cruiser)
-        @cell_a2.place_ship(cruiser)
-        @cell_a3.place_ship(cruiser)
+        @cruiser = Ship.new("Cruiser", 3)
+        @cell_a1.place_ship(@cruiser)
+        @cell_a2.place_ship(@cruiser)
+        @cell_a3.place_ship(@cruiser)
 
-    expect(@cell_a1.ship).to eq(cruiser)
-    expect(@cell_a2.ship).to eq(cruiser)
-    expect(@cell_a3.ship).to eq(cruiser)
+    expect(@cell_a1.ship).to eq(@cruiser)
+    expect(@cell_a2.ship).to eq(@cruiser)
+    expect(@cell_a3.ship).to eq(@cruiser)
     end
 
     it 'can tell the cell is not empty after placing a ship' do
-        @cell_a1.place_ship(cruiser)
+        @cruiser = Ship.new("Cruiser", 3)
+        @cell_a1.place_ship(@cruiser)
 
     expect(@cell_a1.empty?).to eq(false)
     end
@@ -69,14 +70,17 @@ end
     it 'can tell if a cell has been fired at' do
         
     expect(@cell_a1.fired_upon?).to eq(false)
-
-    @cell_a1.fired_upon
+        @cruiser = Ship.new("Cruiser", 3)
+        @cell_a1.place_ship(@cruiser)
+        @cell_a1.fire_upon
 
     expect(@cell_a1.fired_upon?).to eq(true)
     end
 
     it 'can give feedback on ship health' do
-        @cell_a1.fired_upon
+        @cruiser = Ship.new("Cruiser", 3)
+        @cell_a1.place_ship(@cruiser)
+        @cell_a1.fire_upon
 
     expect(@cell_a1.ship.health).to eq(2)
     end
