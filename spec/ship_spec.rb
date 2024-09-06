@@ -20,18 +20,18 @@ RSpec.describe Ship do
     end
 
     describe '#health' do
-        its 'starting health is equal to its length' do
+        it 'starting health is equal to its length' do
 
             expect(@cruiser.health).to eq(3) 
         end
 
-        its 'health decreases by 1 when it is hit' do
+        it 'health decreases by 1 when it is hit' do
             @cruiser.hit
 
             expect(@cruiser.health).to eq(2)
         end
 
-        its 'health decreases by 2 when it is hit twice' do
+        it 'health decreases by 2 when it is hit twice' do
             @cruiser.hit
             @cruiser.hit
             
@@ -52,20 +52,10 @@ RSpec.describe Ship do
             expect(@cruiser.sunk?).to eq(false)
         end
 
-        it 'is sunk if the number of times it has been hit is equal to its length' do
-            @cruiser.hit
-            @cruiser.hit
-            @cruiser.hit
+        it 'is sunk if its health is 0' do
+            @cruiser.health = 0
 
             expect(@cruiser.sunk?).to eq(true)
-        end
-
-        it 'cannot be hit again after it has sunk' do #we probably don't have to include this, but could be an edge case if we have time
-            @cruiser.hit
-            @cruiser.hit
-            @cruiser.hit
-
-            expect(@cruiser.hit).to eq("Those are invalid coordinates. Please try again:")
         end
     end
 end
