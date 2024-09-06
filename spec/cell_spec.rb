@@ -23,6 +23,7 @@ before(:each) do
     @cell_d2 = Cell.new("D2")
     @cell_d3 = Cell.new("D3")
     @cell_d4 = Cell.new("D4")
+end
 
     it 'can initialize' do
         @cell_a1 = Cell.new("A1")
@@ -49,6 +50,7 @@ before(:each) do
     end
 
     it 'can place a ship' do
+        cruiser = Ship.new("Cruiser", 3)
         @cell_a1.place_ship(cruiser)
         @cell_a2.place_ship(cruiser)
         @cell_a3.place_ship(cruiser)
