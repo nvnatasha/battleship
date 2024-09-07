@@ -1,6 +1,7 @@
 require 'pry'
 require './lib/ship'
 require './lib/cell'
+require 'pry'
 
 
 RSpec.describe Cell do
@@ -82,9 +83,9 @@ end
         @cell_a1.fire_upon
 
     expect(@cell_a1.ship.health).to eq(2)
-     end
+    end
 
- describe '#shots fired' do
+describe '#shots fired' do
         it 'renders "." if not fired upon' do
             
 
@@ -120,6 +121,15 @@ end
             expect(@cruiser.sunk?).to eq(true)
             expect(@cell_a3.render).to eq("X")
         end
+
+         it 'reveals a players placed ships upon request' do
+            @cell_a1.place_ship(@cruiser)
+            @cell_a2.place_ship(@cruiser)
+            @cell_a3.place_ship(@cruiser)
+
+            expect(@cell_a3.render(true)).to eq("S")
+            expect(@cell_a2.render).to eq(".")
+         end
     end
     binding.pry
 end

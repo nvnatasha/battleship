@@ -2,12 +2,11 @@
 class Cell
 
     attr_reader :coordinate, :ship, :empty, :hit
-    attr_accessor :place_ship, :fire_upon
+    attr_accessor :fire_upon
 
     def initialize(coordinate)
         @coordinate = coordinate
         @ship = nil
-        @empty = true
         @fired_upon = false
 
     end
@@ -16,12 +15,9 @@ class Cell
         @ship = ship
     end
 
-    def empty?
-        if place_ship(@ship)
-            false
-        else
-            true
-        end
+    def empty? #I modified this method because it was causing some of the tests to fail. I think that's because 
+        #place_ship(@ship) isn't meant to return a boolean; it places a ship in a cell. 
+        @ship.nil?
     end   
 
     def fired_upon?
@@ -33,13 +29,17 @@ class Cell
         @ship.hit unless empty?
     end
 
-    def render(show_ship = false)
-        return "X" if @fired_upon && @ship&.sunk?
-        return "H" if @fired_upon && !empty?
-        return "M" if @fired_upon && empty?
-        return "S" if show_ship && !empty?
-        "."
-     
-    
+    def render(reveal_ship = false)
+        if fired_upon? && !empty? && @ship.sunk?
+            p "X"
+        elsif fired_upon? && !empty?
+            p "H"
+        elsif fired_upon? && empty?
+            p "M"
+        elsif reveal_ship && !empty?
+            p "S"
+        else 
+            p "."
+        end
     end
-    end
+end

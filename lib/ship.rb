@@ -2,8 +2,7 @@ class Ship
 
     attr_reader :name,
                 :length,
-                :health,
-                :hit
+                :health
 
     attr_writer :health
 
@@ -11,6 +10,7 @@ class Ship
         @name = name
         @length = length
         @health = length 
+
     end
 
     def hit
