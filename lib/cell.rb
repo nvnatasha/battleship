@@ -1,3 +1,4 @@
+
 class Cell
 
     attr_reader :coordinate, :ship, :empty, :hit
@@ -31,4 +32,14 @@ class Cell
         @fired_upon = true
         @ship.hit unless empty?
     end
-end
+
+    def render(show_ship = false)
+        return "X" if @fired_upon && @ship&.sunk?
+        return "H" if @fired_upon && !empty?
+        return "M" if @fired_upon && empty?
+        return "S" if show_ship && !empty?
+        "."
+     
+    
+    end
+    end

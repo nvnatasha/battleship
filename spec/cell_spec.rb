@@ -1,3 +1,4 @@
+require 'pry'
 require './lib/ship'
 require './lib/cell'
 
@@ -85,14 +86,16 @@ end
 
  describe '#shots fired' do
         it 'renders "." if not fired upon' do
+            
 
             expect(@cell_a1.render).to eq(".") 
         end
-
+        
         it 'renders "M" if fired upon and empty' do
             @cell_a1.place_ship(@cruiser)
             @cell_a2.place_ship(@cruiser)
             @cell_a3.place_ship(@cruiser)
+            @cell_b1.fire_upon
 
             expect(@cell_b1.render).to eq("M")
         end
@@ -118,6 +121,7 @@ end
             expect(@cell_a3.render).to eq("X")
         end
     end
+    binding.pry
 end
 
         
