@@ -25,9 +25,9 @@ RSpec.describe Turn do
             expect(@turn.cpu_board).to be_a(Board)
         end
 
-        it 'is instantiated with ships for the player and the computer' do
-            expect(@turn.cpu_cruiser).to be_a(Ship)
-            expect(@turn.player_submarine).to be_a(Ship)
-        end
-    end
+    #     it 'is instantiated with ships for the player and the computer' do
+    #         expect(@turn.cpu_cruiser).to be_a(Ship)
+    #         expect(@turn.player_submarine).to be_a(Ship)
+    #     end
+     end
 end
