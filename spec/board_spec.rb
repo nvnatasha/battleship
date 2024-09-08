@@ -61,6 +61,5 @@ RSpec.describe Board do
         expect(@cell_a3.ship).to eq(@cruiser)
         end
     end
-
 end
 
