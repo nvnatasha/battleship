@@ -61,20 +61,18 @@ end
 def valid_placement?(ship, coordinates)
     return false unless coordinates.length == ship.length
     return false unless coordinates.all? { |coord| valid_coordinate?(coord) }
+    return false unless coordinates.all? { |coord| @cells[coord].empty? }
         
     consecutive?(coordinates)
 end
 
 def place(ship, coordinates)
     if valid_placement?(ship, coordinates)
-      coordinates.each do |coord|
+        coordinates.each do |coord|
         @cells[coord].place_ship(ship)
-      end
+        end
     end
-  end
-    
-
-  private
+end
 
 def consecutive?(coordinates)
     rows = coordinates.map { |coord| coord[0] }
@@ -104,7 +102,3 @@ end
     true
     end
 end
-
-
-
-
