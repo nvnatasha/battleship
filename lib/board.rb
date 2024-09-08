@@ -53,6 +53,7 @@ attr_reader :cells
 #     end
 #   end
 
+
 def valid_coordinate?(coordinate)
     @cells.key?(coordinate)
 
@@ -64,6 +65,14 @@ def valid_placement?(ship, coordinates)
         
     consecutive?(coordinates)
 end
+
+def place(ship, coordinates)
+    if valid_placement?(ship, coordinates)
+      coordinates.each do |coord|
+        @cells[coord].place_ship(ship)
+      end
+    end
+  end
     
 
   private
@@ -96,4 +105,7 @@ end
     true
     end
 end
+
+
+
 
