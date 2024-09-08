@@ -98,4 +98,18 @@ RSpec.describe Board do
             expect(@cell_b1.empty?).to eq(true)
         end
     end
+
+    describe '#render' do
+        it 'renders a new board' do
+
+            expected_render = "  1  2  3  4  \n" +
+                        "A .  .  .  .  \n" +
+                        "B .  .  .  .  \n" +
+                        "C .  .  .  .  \n" +
+                        "D .  .  .  .  \n"
+
+            expect(@board.render).to eq(expected_render)
+        end
+    end
+
 end
