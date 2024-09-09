@@ -1,7 +1,5 @@
+require 'spec_helper'
 require './lib/board'
-require './lib/ship'
-require './lib/cell'
-require 'pry'
 
 RSpec.describe Board do
     before(:each) do
