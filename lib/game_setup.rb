@@ -42,7 +42,7 @@ def game_setup
     place_cpu_ships
     puts "COMPUTER BOARD".colorize(:red)
     puts " "
-    puts @cpu_board.render.colorize(:red)
+    puts @cpu_board.render(true).colorize(:red)
 
     puts "YOUR BOARD".colorize(:green)
     puts " "
@@ -97,21 +97,26 @@ def cpu_place_ship(ship)
     end
 end
 
-def random_coordinates(length)
-    letters = ("A".."D").to_a
-    numbers = ("1".."4").to_a 
-    
-    direction = rand(2) == 0 ? "horizontal" : "vertical" 
-    start_letter = rand(letters.length)
-    start_number = rand(1..4)
+def random_coordinates(size)
+    letters = ["A", "B", "C", "D"]
+    numbers = ["1", "2", "3", "4"]
 
+    direction = ["horizontal", "vertical"].sample
+    start_letter = letters.sample
+    start_number = numbers.sample.to_i
+
+    coordinates = []
+  
     if direction == "horizontal"
-        return random_coordinates(length) if start_number + length -1 > 4
-        (0...length).map { |i| letters[start_letter] + (start_number + i).to_s }
-    else
-        return random_coordinates(length) if start_letter + length > 4
-        (0...length).map { |i| letters[start_letter +i] + start_number.to_s }
+        size.times do |i|
+        coordinates << start_letter + (start_number + i).to_s
     end
+    else
+        size.times do |i|
+        coordinates << (start_letter.ord + i).chr + start_number.to_s
+    end
+end
+coordinates
 end
 
 start
