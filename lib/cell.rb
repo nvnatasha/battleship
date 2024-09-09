@@ -14,8 +14,7 @@ class Cell
         @ship = ship
     end
 
-    def empty? #I modified this method because it was causing some of the tests to fail. I think that's because 
-        #place_ship(@ship) isn't meant to return a boolean; it places a ship in a cell. 
+    def empty? 
         @ship.nil?
     end   
 
