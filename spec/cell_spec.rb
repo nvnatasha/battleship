@@ -8,22 +8,10 @@ before(:each) do
     @cell_a1 = Cell.new("A1")
     @cell_a2 = Cell.new("A2")
     @cell_a3 = Cell.new("A3")
-    @cell_a4 = Cell.new("A4")
-
     @cell_b1 = Cell.new("B1")
-    @cell_b2 = Cell.new("B2")
     @cell_b3 = Cell.new("B3")
-    @cell_b4 = Cell.new("B4")
-
-    @cell_c1 = Cell.new("C1")
-    @cell_c2 = Cell.new("C2")
-    @cell_c3 = Cell.new("C3")
     @cell_c4 = Cell.new("C4")
-
     @cell_d1 = Cell.new("D1")
-    @cell_d2 = Cell.new("D2")
-    @cell_d3 = Cell.new("D3")
-    @cell_d4 = Cell.new("D4")
 
     @cruiser = Ship.new("Cruiser", 3)
 end
@@ -120,14 +108,14 @@ describe '#shots fired' do
             expect(@cell_a3.render).to eq("X")
         end
 
-         it 'reveals a players placed ships upon request' do
+        it 'reveals a players placed ships upon request' do
             @cell_a1.place_ship(@cruiser)
             @cell_a2.place_ship(@cruiser)
             @cell_a3.place_ship(@cruiser)
 
             expect(@cell_a3.render(true)).to eq("S")
             expect(@cell_a2.render).to eq(".")
-         end
+        end
     end
 end
 
