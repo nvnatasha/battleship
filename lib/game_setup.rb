@@ -34,26 +34,11 @@ class GameSetup
         puts "YOUR BOARD".colorize(:green)
         puts @player_board.render.colorize(:green)
         puts "When you are ready to place your ships, press enter.".colorize(:light_blue)
-        gets.chomp
-        puts 
-
+    
         place_player_ships
-        puts "Here is what your board looks like with all of your ships in place.".colorize(:light_blue)
-        puts 
-        puts "YOUR BOARD".colorize(:green)
-        puts @player_board.render(true).colorize(:green)
-        puts "Press enter to place computer ships.".colorize(:light_blue)
-        gets.chomp
-        puts 
-
+    
         place_cpu_ships
-        puts "COMPUTER BOARD".colorize(:red)
-        puts 
-        puts @cpu_board.render.colorize(:red)
-
-        puts "YOUR BOARD".colorize(:green)
-        puts 
-        puts @player_board.render(true).colorize(:green)
+    
         puts "All ships are placed. Game is ready to start! \nPress enter when you are ready to take your first shot.\n".colorize(:light_blue)
         gets.chomp
 
@@ -61,10 +46,19 @@ class GameSetup
     end
 
     def place_player_ships
+        gets.chomp
+        puts 
         @player_ships.each do |ship|
             puts "Place your #{ship.name} (#{ship.length} units long).".colorize(:light_blue)
             player_place_ship(ship)
+            puts 
+            puts "Here is what your board looks like with your #{ship.name}.".colorize(:light_blue)
+            puts
+            puts @player_board.render(true).colorize(:green)
         end
+        puts "Press enter to place computer ships.".colorize(:light_blue)
+        gets.chomp
+        puts
     end
 
     def player_place_ship(ship)
@@ -75,11 +69,7 @@ class GameSetup
             coordinates = gets.chomp.upcase.split
 
             if coordinates.length == ship.length && @player_board.valid_placement?(ship, coordinates)
-                @player_board.place(ship, coordinates)
-                puts 
-                puts "Here is what your board looks like with your #{ship.name}.".colorize(:light_blue)
-                puts
-                puts @player_board.render(true).colorize(:green)
+                @player_board.place(ship, coordinates)       
                 break
             else
                 puts "Invalid placement. Please try again.".colorize(:red)
@@ -92,10 +82,11 @@ class GameSetup
 
         @cpu_ships.each do |ship|
             cpu_place_ship(ship)
+        puts
         end
-
         puts "Computer ships are placed!".colorize(:light_blue)
-        puts 
+        puts
+        puts @cpu_board.render.colorize(:red)
     end
 
     def cpu_place_ship(ship)

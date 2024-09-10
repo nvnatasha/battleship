@@ -19,7 +19,7 @@ class Turn
 
   def player_take_turn
     loop do
-        puts "Fire away! Enter the coordinates for your first shot.".colorize(:light_blue)
+        puts "Fire away! Enter the coordinates for your shot.".colorize(:light_blue)
         coordinate = gets.chomp.upcase
     
         if @cpu_board.valid_coordinate?(coordinate)
@@ -27,6 +27,8 @@ class Turn
           show_player_shot(coordinate)
           puts "Here's the computer's board after your shot.".colorize(:light_blue)
           puts @cpu_board.render.colorize(:red)
+          puts "Press enter to proceed to the computer's shot.".colorize(:light_blue)
+          gets.chomp
           break
         else
           puts "Invalid coordinate, please try again.".colorize(:red)
@@ -37,11 +39,15 @@ class Turn
   def cpu_take_turn
     loop do
       random_coordinate = @player_board.cells.keys.sample
-      if  @player_board.valid_coordinate?(random_coordinate) && @player_board.cells[random_coordinate].fired_upon == false
+      if  @player_board.valid_coordinate?(random_coordinate) && @player_board.cells[random_coordinate].fired_upon? == false
         @player_board.fire_upon(random_coordinate)
-        puts "The computer has taken a shot"
-        @player_board.render
+        puts "The computer has taken a shot".colorize(:red)
         show_cpu_shot(random_coordinate)
+        puts
+        puts "Here is your board after the computer's shot.".colorize(:light_blue)
+        puts @player_board.render.colorize(:green)
+        puts "Press enter when you're ready to take your next shot.".colorize(:light_blue)
+        gets.chomp
       break
       end
     end
@@ -64,11 +70,11 @@ class Turn
   def show_cpu_shot(coordinate)
     cell = @player_board.cells[coordinate]
     if cell.empty?
-      puts "The computer shot on #{coordinate} was a miss."
+      puts "The computer shot on #{coordinate} was a miss.".colorize(:red)
     elsif cell.ship.sunk?
-      puts "The computer shot on #{coordinate} sunk a ship!"
+      puts "The computer shot on #{coordinate} sunk a ship!".colorize(:red)
     else
-      puts "The computer shot on #{coordinate} was a hit!"
+      puts "The computer shot on #{coordinate} was a hit!".colorize(:red)
     end
   end
 
