@@ -1,7 +1,7 @@
-require './board'
-require './cell'
-require './turn'
-require './ship'
+require './lib/board'
+require './lib/cell'
+require './lib/turn'
+require './lib/ship'
 require 'colorize'
 
 class GameSetup
