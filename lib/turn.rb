@@ -1,17 +1,28 @@
-require 'colorize'
+
 
 class Turn
 
-    def initialize 
+    def initialize
+
         
     end
 
-    def player_take_turn(coordinate)
+    def take_turns
         loop do
-            puts "Pick a coordinate to shoot".colorize(:light_blue)
+          player_take_turn
+          break if all_ships_sunk?(@cpu_ships, @cpu_board)
+    
+          cpu_take_turn
+          break if all_ships_sunk?(@player_ships, @player_board)
+        end
+      end
+
+    def player_take_turn
+        loop do
+            puts "Fire away! Enter the coordinates for your first shot.".colorize(:light_blue)
             coordinate = gets.chomp.upcase
         
-        if cpu_board.valid_coordinate?(coordinate)
+        if @cpu_board.valid_coordinate?(coordinate)
             @cpu_board.fire_upon(coordinate)
             puts "Here's the board after your shot".colorize(:light_blue)
             @cpu_board.render
@@ -35,6 +46,7 @@ def cpu_take_turn(coordinate)
         end
     end 
 end
+end
 
 def show_player_shot(coordinate)
     if @cpu_board.cells[coordinate].empty?
@@ -55,3 +67,16 @@ def show_cpu_shot(coordinate)
       puts "The computer shot on #{coordinate} was a hit!"
     end
   end
+
+  def all_ships_sunk?(ships, board)
+    ships.all? { |ship| ship.sunk? }
+  end
+
+  def end_game
+    if all_ships_sunk?(@computer_ships, @computer_board)
+      puts "Game over. Congratulations, you are the winner!!"
+    else
+      puts "The computer sank your ships. Game over."
+    end
+  end
+ 

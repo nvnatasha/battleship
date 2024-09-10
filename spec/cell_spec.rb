@@ -1,5 +1,5 @@
 require 'spec_helper'
-require './lib/cell'
+require_relative '../lib/cell'
 
 RSpec.describe Cell do
 before(:each) do

@@ -1,7 +1,3 @@
-require './board'
-require './cell'
-require './turn'
-require './ship'
 require 'colorize'
 
 class GameSetup
