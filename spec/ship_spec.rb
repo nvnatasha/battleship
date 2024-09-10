@@ -1,5 +1,5 @@
 require 'spec_helper'
-require './lib/ship'
+require_relative '../lib/ship'
 
 RSpec.describe Ship do
     before(:each) do

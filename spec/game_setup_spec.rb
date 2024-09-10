@@ -1,5 +1,5 @@
 require 'spec_helper'
-require './lib/game_setup'
+require_relative '../lib/game_setup'
 
 RSpec.describe GameSetup do
     before(:each) do

@@ -1,5 +1,5 @@
 require 'spec_helper'
-require './lib/board'
+require_relative '../lib/board'
 
 RSpec.describe Board do
     before(:each) do

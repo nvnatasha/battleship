@@ -1,10 +1,9 @@
-require 'spec_helper'
+
 
 class Turn
 
-    def initialize(player_board, cpu_board)
-        @player_board = player_board
-        @cpu_board = cpu_board
+    def initialize
+
         
     end
 

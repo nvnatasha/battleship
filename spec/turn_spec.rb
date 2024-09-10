@@ -1,5 +1,5 @@
 require 'spec_helper'
-require './lib/turn'
+require_relative '../lib/turn'
 
 RSpec.describe Turn do
     before(:each) do
@@ -44,7 +44,7 @@ RSpec.describe Turn do
             
         end
     end
-    
+
         it 'indicates when a cell has been fired upon' do
             @cell_a1.fire_upon
 
