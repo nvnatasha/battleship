@@ -16,44 +16,6 @@ attr_reader :cells
         end
     end
 
-
-
-  
-#     def initialize
-#       @cells = create_cells
-#     end
-  
-#     def create_cells
-#       cells = {}
-#       all_coordinates.each do |coordinate|
-#         cells[coordinate] = Cell.new(coordinate)
-#       end
-#       cells
-#     end
-
-  
-#     def all_coordinates
-#       coordinates = []
-#       rows.each do |row|
-#         columns.each do |column|
-#           coordinates << "#{row}#{column}"
-#         end
-#       end
-#       coordinates
-#     end
-  
-
-#     def rows
-#       ["A", "B", "C", "D"]
-#     end
-  
-
-#     def columns
-#       [1, 2, 3, 4]
-#     end
-#   end
-
-
     def valid_coordinate?(coordinate)
         @cells.key?(coordinate)
     end
