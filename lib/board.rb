@@ -16,6 +16,11 @@ attr_reader :cells
         end
     end
 
+    def fire_upon(coordinate)
+        cell = @cells[coordinate]
+        cell.fire_upon if cell
+    end
+
     def valid_coordinate?(coordinate)
         @cells.key?(coordinate)
     end

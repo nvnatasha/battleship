@@ -10,7 +10,12 @@ class Ship
         @name = name
         @length = length
         @health = length 
+    end
 
+    def self.create_ships(ship_info)
+        ship_info.map do |info|
+            Ship.new(info[:name], info[:length])
+        end
     end
 
     def hit

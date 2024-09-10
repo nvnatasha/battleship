@@ -46,7 +46,6 @@ RSpec.describe Turn do
     end
 
         it 'indicates when a cell has been fired upon' do
-            @cell_a1.fire_upon
 
             expect(@cell_a1.fired_upon?).to eq(true)
         end

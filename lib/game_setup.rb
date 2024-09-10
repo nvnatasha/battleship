@@ -2,24 +2,32 @@ require 'colorize'
 
 class GameSetup
     def initialize 
-
+        @player_ships = []
+        @cpu_ships = []
     end
 
-def start
-    puts "Welcome to Battleship!".colorize(:light_blue)
-    puts "----------------------------------------------------------".colorize(:light_blue)
-    puts "Enter 'p' to play or 'q' to quit.".colorize(:green)
-    user_input = gets.chomp
-    return puts "Goodbye!".colorize(:red) unless user_input == "p"
-    puts "Let's play!".colorize(:light_blue)
-    puts " "
-    game_setup
-end
+    def ship_setup
+        ship_info = [{ name: "Cruiser", length: 3 }, { name: "Submarine", length: 2 }]
+        @player_ships = Ship.create_ships(ship_info)
+        @cpu_ships = Ship.create_ships(ship_info)
+    end
+
+    def start
+        puts "Welcome to Battleship!".colorize(:light_blue)
+        puts "----------------------------------------------------------".colorize(:light_blue)
+        puts "Enter 'p' to play or 'q' to quit.".colorize(:green)
+        user_input = gets.chomp
+        return puts "Goodbye!".colorize(:red) unless user_input == "p"
+        puts "Let's play!".colorize(:light_blue)
+        puts " "
+        ship_setup
+        game_setup
+    end
 
     def game_setup
         @player_board = Board.new
         @cpu_board = Board.new
-        @turn = Turn.new
+        @turn = Turn.new(@player_board, @cpu_board, @player_ships, @cpu_ships)
 
         puts "Here's your empty board.".colorize(:light_blue)
         puts 
@@ -30,7 +38,7 @@ end
         puts 
 
         place_player_ships
-        puts "Here is what your board looks like after you placed your ships.".colorize(:light_blue)
+        puts "Here is what your board looks like with all of your ships in place.".colorize(:light_blue)
         puts 
         puts "YOUR BOARD".colorize(:green)
         puts @player_board.render(true).colorize(:green)
@@ -48,25 +56,30 @@ end
         puts @player_board.render(true).colorize(:green)
         puts "All ships are placed. Game is ready to start! \nPress enter when you are ready to take your first shot.\n".colorize(:light_blue)
         gets.chomp
+
+        @turn.take_turns
     end
 
     def place_player_ships
-        cruiser = Ship.new("Cruiser", 3)
-        puts "Place your Cruiser (3 units long).".colorize(:light_blue)
-        player_place_ship(cruiser)
-
-        submarine = Ship.new("Submarine", 2)
-        puts "Place your Submarine (2 units long).".colorize(:light_blue)
-        player_place_ship(submarine)
+        @player_ships.each do |ship|
+            puts "Place your #{ship.name} (#{ship.length} units long).".colorize(:light_blue)
+            player_place_ship(ship)
+        end
     end
 
     def player_place_ship(ship)
         loop do
-            puts "Enter the coordinates for your #{ship.name} (e.g., A1 A2 A3 for 3 spaces):".colorize(:light_blue)
+            example_coordinates = (1..ship.length).map { |n| "A#{n}" }.join(" ")
+
+            puts "Enter the coordinates for your #{ship.name} (e.g., #{example_coordinates} for #{ship.length} spaces):".colorize(:light_blue)
             coordinates = gets.chomp.upcase.split
 
             if coordinates.length == ship.length && @player_board.valid_placement?(ship, coordinates)
                 @player_board.place(ship, coordinates)
+                puts 
+                puts "Here is what your board looks like with your #{ship.name}.".colorize(:light_blue)
+                puts
+                puts @player_board.render(true).colorize(:green)
                 break
             else
                 puts "Invalid placement. Please try again.".colorize(:red)
@@ -77,11 +90,9 @@ end
     def place_cpu_ships
         puts "Computer is placing its ships...".colorize(:light_blue)
 
-        cruiser = Ship.new("Cruiser", 3)
-        cpu_place_ship(cruiser)
-
-        submarine = Ship.new("Submarine", 2)
-        cpu_place_ship(submarine)
+        @cpu_ships.each do |ship|
+            cpu_place_ship(ship)
+        end
 
         puts "Computer ships are placed!".colorize(:light_blue)
         puts 
