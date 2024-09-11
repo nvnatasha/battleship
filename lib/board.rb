@@ -32,7 +32,7 @@ class Board
         consecutive?(coordinates)
     end
 
-    def place(ship, coordinates, player_ship = true) #added player_ship attribute so "Placing ship..." is only put'sed when placing a player
+    def place(ship, coordinates, player_ship = true) 
         if valid_placement?(ship, coordinates)
             coordinates.each do |coord|
                 if player_ship 
@@ -67,7 +67,7 @@ class Board
     end
 
     def consecutive_numbers?(numbers)
-        numbers.each_cons(2).all? { |a, b| b == a+1 } #simplifying this code using ruby's built in each_cons method
+        numbers.each_cons(2).all? { |a, b| b == a+1 } 
     end
 
     def render(reveal_ship = false)
