@@ -9,34 +9,47 @@ class Turn
 
   def take_turns
     loop do
-            player_take_turn
-         if all_ships_sunk?(@cpu_ships)
-            end_game(true)
-         break
+      player_take_turn
+        if all_ships_sunk?(@cpu_ships)
+          end_game(true)
+        break
     end
-
-            cpu_take_turn
-         if all_ships_sunk?(@player_ships)
-            end_game(false)
-         break
+      
+      cpu_take_turn
+        if all_ships_sunk?(@player_ships)
+          end_game(false)
+        break
       end
     end
   end
 
   def player_take_turn
     loop do
-        puts "Fire away! Enter the coordinates for your shot.".colorize(:light_blue)
-        coordinate = gets.chomp.upcase
-    
-        if @cpu_board.valid_coordinate?(coordinate)
-          @cpu_board.fire_upon(coordinate)
-          show_player_shot(coordinate)
-          puts "Here's the computer's board after your shot.".colorize(:light_blue)
-          puts @cpu_board.render.colorize(:red)
+      puts "Fire away! Enter the coordinates for your shot.".colorize(:light_blue)
+      coordinate = gets.chomp.upcase.strip #this should trim excess whitespace so a coordinate won't be invalid if it has extra spaces
+  
+      if @cpu_board.valid_coordinate?(coordinate) 
+        cell = @cpu_board.cells[coordinate]
+
+      if cell && !cell.fired_upon? #won't let a cell be fired upon more than once
+        @cpu_board.fire_upon(coordinate)
+        show_player_shot(coordinate)
+        puts "Here's the computer's board after your shot.".colorize(:light_blue)
+        sleep(1)
+        puts
+        puts "COMPUTER BOARD".colorize(:red)
+        puts @cpu_board.render.colorize(:red)
+
+        unless all_ships_sunk?(@cpu_ships) #added so the player isn't prompted to proceed to the computer's shot once all of the cpu ships are sunk
+          sleep(1)
           puts "Press enter to proceed to the computer's shot.".colorize(:light_blue)
           gets.chomp
-          break
-        else
+        end
+        break
+      else
+        puts "This coordinate has already been fired upon or is invalid. Please try again.".colorize(:red)
+      end
+      else
           puts "Invalid coordinate, please try again.".colorize(:red)
       end
     end
@@ -47,15 +60,31 @@ class Turn
       random_coordinate = @player_board.cells.keys.sample
       if  @player_board.valid_coordinate?(random_coordinate) && @player_board.cells[random_coordinate].fired_upon? == false
         @player_board.fire_upon(random_coordinate)
-        puts "The computer has taken a shot".colorize(:red)
+        puts "The computer has taken a shot.".colorize(:light_blue)
+        sleep(1)
         show_cpu_shot(random_coordinate)
         puts
-        puts "Here is your board after the computer's shot.".colorize(:light_blue)
-        puts @player_board.render.colorize(:green)
-        puts "Press enter when you're ready to take your next shot.".colorize(:light_blue)
-        puts @cpu_board.render.colorize(:red)
+        puts "Press enter to see your board after the computer's shot.".colorize(:light_blue)
         gets.chomp
-      break
+        puts "Here is your board after the computer's shot.".colorize(:light_blue)
+        puts
+        puts "YOUR BOARD".colorize(:green)
+        puts @player_board.render.colorize(:green)
+
+        unless all_ships_sunk?(@player_ships) #added so the player isn't asked to take another shot once all of their ships are sunk
+          sleep(1)
+          puts "Press enter when you're ready to take your next shot.".colorize(:light_blue)
+          gets.chomp
+          puts
+          puts "COMPUTER BOARD".colorize(:red)
+          puts @cpu_board.render.colorize(:red)
+        else
+          puts
+          puts "COMPUTER BOARD".colorize(:red)
+          puts @cpu_board.render.colorize(:red)
+          gets.chomp
+        end
+        break
       end
     end
   end
@@ -64,12 +93,15 @@ class Turn
     cell = @cpu_board.cells[coordinate]
     if cell.empty?
       puts "Your shot on #{coordinate} was a miss.".colorize(:red)
+      sleep(1)
       puts
     elsif cell.ship.sunk?
       puts "Your shot on #{coordinate} sunk a ship!".colorize(:green)
+      sleep(1)
       puts
     else
       puts "Your shot on #{coordinate} was a hit!".colorize(:green)
+      sleep(1)
       puts 
     end
   end
@@ -77,24 +109,26 @@ class Turn
   def show_cpu_shot(coordinate)
     cell = @player_board.cells[coordinate]
     if cell.empty?
-      puts "The computer shot on #{coordinate} was a miss.".colorize(:red)
+      puts "The computer's shot on #{coordinate} was a miss.".colorize(:red)
+      sleep(1)
     elsif cell.ship.sunk?
-      puts "The computer shot on #{coordinate} sunk a ship!".colorize(:red)
+      puts "The computer's shot on #{coordinate} sunk a ship!".colorize(:green)
+      sleep(1)
     else
-      puts "The computer shot on #{coordinate} was a hit!".colorize(:red)
+      puts "The computer's shot on #{coordinate} was a hit!".colorize(:green)
+      sleep(1)
     end
   end
 
   def all_ships_sunk?(ships)
-      ships.all? { |ship| ship.sunk? }
-      end
+    ships.all? { |ship| ship.sunk? }
+    end
   end
 
   def end_game(player_wins)
     if player_wins
-        puts "Game over. Congratulations, you are the winner!!".colorize(:green)
+      puts "Game over. Congratulations, you are the winner!!".colorize(:green)
     else
-        puts "The computer sank all your ships. Game over.".colorize(:red)
-        
+      puts "The computer sank all your ships. Game over.".colorize(:red)
     end
   end

@@ -33,10 +33,12 @@ attr_reader :cells
         consecutive?(coordinates)
     end
 
-    def place(ship, coordinates)
+    def place(ship, coordinates, player_ship = true) #added player_ship attribute so "Placing ship..." is only put'sed when placing a player
         if valid_placement?(ship, coordinates)
             coordinates.each do |coord|
-                puts "Placing #{ship.name} at #{coord}" 
+                if player_ship 
+                    puts "Placing #{ship.name} at #{coord}" 
+                end
                 @cells[coord].place_ship(ship)
             end
         else
@@ -66,10 +68,7 @@ attr_reader :cells
     end
 
     def consecutive_numbers?(numbers)
-        (0...numbers.length - 1).each do |i|
-        return false if numbers[i] + 1 != numbers[i + 1]
-    end
-        true
+        numbers.each_cons(2).all? { |a, b| b == a+1 } #simplifying this code using ruby's built in each_cons method
     end
 
     def render(reveal_ship = false)
