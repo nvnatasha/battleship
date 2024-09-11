@@ -33,10 +33,12 @@ attr_reader :cells
         consecutive?(coordinates)
     end
 
-    def place(ship, coordinates)
+    def place(ship, coordinates, player_ship = true) #added player_ship attribute so "Placing ship..." is only put'sed when placing a player
         if valid_placement?(ship, coordinates)
             coordinates.each do |coord|
-                puts "Placing #{ship.name} at #{coord}" 
+                if player_ship 
+                    puts "Placing #{ship.name} at #{coord}" 
+                end
                 @cells[coord].place_ship(ship)
             end
         else
