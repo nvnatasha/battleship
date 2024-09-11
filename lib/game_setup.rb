@@ -45,7 +45,7 @@ class GameSetup
         place_player_ships
     
         place_cpu_ships
-        sleep(2)
+        sleep(1)
     
         puts "All ships are placed. Game is ready to start! \n\nPress enter when you are ready to take your first shot.\n".colorize(:light_blue)
         gets.chomp
@@ -61,10 +61,10 @@ class GameSetup
             puts 
             puts "Here is what your board looks like with your #{ship.name}.".colorize(:light_blue)
             puts
-            sleep(2)
+            sleep(1)
             puts "YOUR BOARD".colorize(:green)
             puts @player_board.render(true).colorize(:green)
-            sleep(2)
+            sleep(1)
             puts
         end
         puts "Press enter to place computer ships.".colorize(:light_blue)
@@ -94,7 +94,7 @@ class GameSetup
         @cpu_ships.each do |ship|
             cpu_place_ship(ship)
         end
-        sleep(2)
+        sleep(1)
         puts "Computer ships are placed!".colorize(:light_blue)
         puts
         puts "COMPUTER BOARD".colorize(:red)

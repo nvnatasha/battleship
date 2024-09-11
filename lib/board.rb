@@ -68,10 +68,7 @@ attr_reader :cells
     end
 
     def consecutive_numbers?(numbers)
-        (0...numbers.length - 1).each do |i|
-        return false if numbers[i] + 1 != numbers[i + 1]
-    end
-        true
+        numbers.each_cons(2).all? { |a, b| b == a+1 } #simplifying this code using ruby's built in each_cons method
     end
 
     def render(reveal_ship = false)
