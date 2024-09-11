@@ -11,3 +11,6 @@ RSpec.configure do |config|
     config.color = true
     config.formatter = :documentation
 end
+
+require 'simplecov'
+SimpleCov.start
