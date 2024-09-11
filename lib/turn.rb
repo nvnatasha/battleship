@@ -1,21 +1,27 @@
 class Turn
 
-  def initialize(cpu_board, player_board, player_ships, cpu_ships)
-    @cpu_board = cpu_board
+  def initialize(player_board, cpu_board, player_ships, cpu_ships)
     @player_board = player_board
+    @cpu_board = cpu_board
     @player_ships = player_ships
     @cpu_ships = cpu_ships
   end
 
   def take_turns
-      loop do
-        player_take_turn
-        break if all_ships_sunk?(@cpu_ships, @cpu_board)
+    loop do
+            player_take_turn
+         if all_ships_sunk?(@cpu_ships)
+            end_game(true)
+         break
+    end
 
-        cpu_take_turn
-        break if all_ships_sunk?(@player_ships, @player_board)
+            cpu_take_turn
+         if all_ships_sunk?(@player_ships)
+            end_game(false)
+         break
       end
     end
+  end
 
   def player_take_turn
     loop do
@@ -47,6 +53,7 @@ class Turn
         puts "Here is your board after the computer's shot.".colorize(:light_blue)
         puts @player_board.render.colorize(:green)
         puts "Press enter when you're ready to take your next shot.".colorize(:light_blue)
+        puts @cpu_board.render.colorize(:red)
         gets.chomp
       break
       end
@@ -78,15 +85,16 @@ class Turn
     end
   end
 
-  def all_ships_sunk?(ships, board)
-    ships.all? { |ship| ship.sunk? }
+  def all_ships_sunk?(ships)
+      ships.all? { |ship| ship.sunk? }
+      end
   end
 
-  def end_game
-    if all_ships_sunk?(@cpu_ships, @cpu_board)
-      puts "Game over. Congratulations, you are the winner!!"
+  def end_game(player_wins)
+    if player_wins
+        puts "Game over. Congratulations, you are the winner!!".colorize(:green)
     else
-      puts "The computer sank your ships. Game over."
+        puts "The computer sank all your ships. Game over.".colorize(:red)
+        
     end
   end
-end

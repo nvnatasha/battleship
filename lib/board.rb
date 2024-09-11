@@ -36,8 +36,11 @@ attr_reader :cells
     def place(ship, coordinates)
         if valid_placement?(ship, coordinates)
             coordinates.each do |coord|
-            @cells[coord].place_ship(ship)
+                puts "Placing #{ship.name} at #{coord}" 
+                @cells[coord].place_ship(ship)
             end
+        else
+            puts "Invalid placement for #{ship.name} at #{coordinates.join(", ")}"
         end
     end
 
