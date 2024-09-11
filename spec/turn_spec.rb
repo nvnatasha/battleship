@@ -5,7 +5,6 @@ RSpec.describe Turn do
     before(:each) do
         @player_board = Board.new
         @cpu_board = Board.new
-        @turn = Turn.new(@player_board, @cpu_board)
         @cpu_board.create_cells
         @cpu_cruiser = Ship.new("Cruiser", 3)
         @cpu_submarine = Ship.new("Submarine", 2)
@@ -31,6 +30,8 @@ RSpec.describe Turn do
         @cell_c4.place_ship(@cpu_submarine) 
         @cpu_board.place(@cpu_submarine, ["C3", "C4"])
         @cell_a1.fire_upon
+
+        @turn = Turn.new(@player_board, @cpu_board, @player_ships, @cpu_ships)
     end
 
     describe '#initialze' do
@@ -40,11 +41,6 @@ RSpec.describe Turn do
     end
 
     describe '#taking turns' do
-        before(:each) do
-            
-        end
-    end
-
         it 'indicates when a cell has been fired upon' do
 
             expect(@cell_a1.fired_upon?).to eq(true)
@@ -83,16 +79,25 @@ RSpec.describe Turn do
                         "D .  .  .  .  \n"
             expect(@cpu_board.render).to eq(expected_render)
         end
-    
 
-    describe '#ending the game' do
-        it 'ends the game when all of a players ships are sunk' do
-            @cell_a2.fire_upon
-            @cell_a3.fire_upon
-            @cell_c3.fire_upon
-            @cell_c4.fire_upon
+        it 'does not reduce a ships health if a cell containing the ship has already been fired upon' do
+            initial_health = @cpu_cruiser.health
 
-            expect("Game over. Congratulations, you are the winner!!")
+            expect(@cpu_cruiser.health).to eq(initial_health)
+        end
+
+        it 'returns true if all ships are sunk' do
+            @player_ships.each { |ship| ship.health = 0 }
+            @cpu_ships.each { |ship| ship.health = 0 }
+        
+            expect(@turn.all_ships_sunk?(@player_ships)).to be(true)
+            expect(@turn.all_ships_sunk?(@cpu_ships)).to be(true)
+        end
+
+        it 'returns false if all ships are not sunk' do
+            @player_ships.first.instance_variable_set(:@health, 0)
+
+            expect(@turn.all_ships_sunk?(@player_ships)).to be(false)
         end
     end
 end

@@ -16,6 +16,11 @@ RSpec.describe Board do
         it 'is a hash' do
             expect(@board.cells).to be_a(Hash)
         end
+
+        it 'initializes as a grid that is 4 units by 4 units' do
+            expect(@board.cells.keys.length).to eq(16)
+            expect(@board.cells.values.all? { |cell| cell.is_a?(Cell) }).to be(true)
+        end
     end
 
     describe '#validating coordinates' do
@@ -82,7 +87,7 @@ RSpec.describe Board do
 
             expect(@board.valid_placement?(@submarine, ["A1", "B1"])).to eq(false)
             expect(@board.place(@submarine, ["A1", "B1"])).to eq (nil)
-            expect(@cell_a1.ship). to eq(@cruiser)
+            expect(@cell_a1.ship).to eq(@cruiser)
         end
 
         it 'indicates that a cell is no longer empty after a ship is placed in it' do
@@ -109,5 +114,4 @@ RSpec.describe Board do
             expect(@board.render).to eq(expected_render)
         end
     end
-
 end

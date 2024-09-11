@@ -38,6 +38,11 @@ RSpec.describe Ship do
             
             expect(@cruiser.health).to eq(1)
         end
+
+        it 'does not allow health to be less than 0' do
+            5.times { @cruiser.hit }
+            expect(@cruiser.health).to eq(0)
+        end
     end
 
     describe '#sinking' do 

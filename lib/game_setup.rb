@@ -19,7 +19,7 @@ class GameSetup
     def start
         puts "Welcome to Battleship!".colorize(:light_blue)
         puts "----------------------------------------------------------".colorize(:light_blue)
-        puts "Enter 'p' to play or 'q' to q uit.".colorize(:green)
+        puts "Enter 'p' to play or 'q' to quit.".colorize(:green)
         user_input = gets.chomp
         return puts "Goodbye!".colorize(:red) unless user_input == "p"
         puts "Let's play!".colorize(:light_blue)
@@ -128,8 +128,8 @@ class GameSetup
         else
             size.times do |i|
             coordinates << (start_letter.ord + i).chr + start_number.to_s
+            end
         end
-    end
     coordinates
     end
 end
